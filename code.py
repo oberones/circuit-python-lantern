@@ -43,6 +43,9 @@ colors = [
 
 # Function to interpolate colors
 def interpolate_color(color1, color2, steps):
+    print("interpolate color gc - pre")
+    gc.collect()
+    print(gc.mem_free())
     step_size = 1.0 / steps
     interp_colors = []
     for i in range(steps):
@@ -50,7 +53,7 @@ def interpolate_color(color1, color2, steps):
         g = int((1.0 - step_size * i) * color1[1] + step_size * i * color2[1])
         b = int((1.0 - step_size * i) * color1[2] + step_size * i * color2[2])
         interp_colors.append((r, g, b))
-    print("interpolate color gc")
+    print("interpolate color gc - post")
     gc.collect()
     print(gc.mem_free())
     return interp_colors
@@ -61,7 +64,8 @@ def config_spectrum():
     while True:
         current_color = colors[i]
         next_color = colors[(i + 1) % len(colors)]
-        transition_steps = 50
+        transition_steps = 40
+        gc.collect()
         i_colors = interpolate_color(current_color, next_color, transition_steps)
         print("config spectrum gc")
         gc.collect()
@@ -135,3 +139,4 @@ while True:
     gc.collect()
     print(gc.mem_free())
     config_map[current_config]()
+    gc.collect()
