@@ -5,6 +5,7 @@ import random
 from adafruit_debouncer import Debouncer
 from digitalio import DigitalInOut, Direction, Pull
 from adafruit_circuitplayground import cp
+
 cp.pixels.auto_write = False
 cp.pixels.brightness = 0.3
 button_a_pin = DigitalInOut(board.BUTTON_A)
@@ -15,6 +16,7 @@ button_b_pin = DigitalInOut(board.BUTTON_B)
 button_b_pin.direction = Direction.INPUT
 button_b_pin.pull = Pull.DOWN
 button_b_debounced = Debouncer(button_b_pin)
+
 
 def config_fire():
     while True:
@@ -35,6 +37,7 @@ def config_fire():
         # Check for button presses
         if button_a_debounced.fell or button_b_debounced.fell:
             return
+
 
 # Define the color spectrum
 colors = [
@@ -58,6 +61,7 @@ def interpolate_color(color1, color2, steps):
         interp_colors.append((r, g, b))
     return interp_colors
 
+
 # Function to cycle through the color spectrum
 def config_spectrum():
     i = 0
@@ -77,9 +81,11 @@ def config_spectrum():
         time.sleep(0.5)
         i = (i + 1) % len(colors)
 
+
 def complementary_color(color):
     """Return the complementary color."""
     return (255 - color[0], 255 - color[1], 255 - color[2])
+
 
 def blend_colors(color1, color2, weight=0.5):
     """Blend two colors together. Weight determines the balance of the blend."""
@@ -87,6 +93,7 @@ def blend_colors(color1, color2, weight=0.5):
     g = int(color1[1] * weight + color2[1] * (1 - weight))
     b = int(color1[2] * weight + color2[2] * (1 - weight))
     return (r, g, b)
+
 
 def config_psychedelic():
     while True:
@@ -104,7 +111,9 @@ def config_psychedelic():
 
                 # Top layer: two dynamic LEDs with complementary color
                 for j in range(10):  # Move the dynamic LEDs around the circle
-                    blend_color = blend_colors(step_color, complementary_color(step_color))
+                    blend_color = blend_colors(
+                        step_color, complementary_color(step_color)
+                    )
 
                     # Set main dynamic LEDs
                     cp.pixels[j] = complementary_color(step_color)
@@ -117,21 +126,15 @@ def config_psychedelic():
                     cp.pixels[(j + 4) % 10] = blend_color
 
                     cp.pixels.show()
+                    button_a_debounced.update()
+                    button_b_debounced.update()
+                    if button_a_debounced.fell or button_b_debounced.fell:
+                        return
                     time.sleep(0.05)
 
                     # Reset LEDs for next iteration
                     for k in range(10):
                         cp.pixels[k] = step_color
-
-                # Update button states
-                button_a_debounced.update()
-                button_b_debounced.update()
-
-                # Check for button presses
-                if button_a_debounced.fell or button_b_debounced.fell:
-                    return  # Return from the function if a button was pressed
-
-
 
 
 current_config = 0
