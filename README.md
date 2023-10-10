@@ -13,12 +13,14 @@ A circuit python playground express project for a programmable LED lantern using
 5. Download the corresponding library zip from: https://github.com/adafruit/Adafruit_CircuitPython_Bundle/releases/
 
 6. Add the following folders/files to the lib folder in the new mounted CIRCUITPY folder
-	adafruit_bus_device
-	adafruit_circuitplayground
-	adafruit_debouncer.mpy
-	adafruit_lis3dh.mpy (?)
-	adafruit_ticks.mpy
-	neopixel.mpy
+- adafruit_bus_device
+- adafruit_circuitplayground
+- adafruit_debouncer.mpy
+- adafruit_lis3dh.mpy (?)
+- adafruit_ticks.mpy
+- neopixel.mpy
+
+7. Copy code.py to the root of the mounted CIRCUITPY folder
 
 # Connect to Serial Console
 ## OSX
