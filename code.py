@@ -23,30 +23,22 @@ def config_fire():
         flicker_r = random.randint(150, 255)
         flicker_g = random.randint(50, 150)
         flicker_b = random.randint(0, 50)
-
         flicker_color = (flicker_r, flicker_g, flicker_b)
-
         cp.pixels.fill(flicker_color)
         cp.pixels.show()
         time.sleep(random.uniform(0.05, 0.1))
-
-        # Update button states
         button_a_debounced.update()
         button_b_debounced.update()
-
-        # Check for button presses
         if button_a_debounced.fell or button_b_debounced.fell:
             return
 
-
-# Define the color spectrum
 colors = [
-    (255, 0, 0),  # Red
+    (255, 0, 0),    # Red
     (255, 127, 0),  # Orange
     (255, 255, 0),  # Yellow
-    (0, 255, 0),  # Green
-    (0, 0, 255),  # Blue
-    (75, 0, 130),  # Indigo
+    (0, 255, 0),    # Green
+    (0, 0, 255),    # Blue
+    (75, 0, 130),   # Indigo
     (148, 0, 211),  # Violet
 ]
 
@@ -60,7 +52,6 @@ def interpolate_color(color1, color2, steps):
         b = int((1.0 - step_size * i) * color1[2] + step_size * i * color2[2])
         interp_colors.append((r, g, b))
     return interp_colors
-
 
 # Function to cycle through the color spectrum
 def config_spectrum():
@@ -83,17 +74,13 @@ def config_spectrum():
 
 
 def complementary_color(color):
-    """Return the complementary color."""
     return (255 - color[0], 255 - color[1], 255 - color[2])
 
-
 def blend_colors(color1, color2, weight=0.5):
-    """Blend two colors together. Weight determines the balance of the blend."""
     r = int(color1[0] * weight + color2[0] * (1 - weight))
     g = int(color1[1] * weight + color2[1] * (1 - weight))
     b = int(color1[2] * weight + color2[2] * (1 - weight))
     return (r, g, b)
-
 
 def config_psychedelic():
     while True:
@@ -147,5 +134,4 @@ while True:
         current_config = (current_config + 1) % (max_config + 1)
     button_a_debounced.update()
     button_b_debounced.update()
-    print(current_config)
     config_map[current_config]()
