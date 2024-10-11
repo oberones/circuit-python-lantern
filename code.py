@@ -32,13 +32,14 @@ def config_fire():
             return
 
 colors = [
+    (0, 0, 255),    # Blue
+    (75, 0, 130),   # Indigo
+    (148, 0, 211),  # Violet
     (255, 0, 0),    # Red
     (255, 127, 0),  # Orange
     (255, 255, 0),  # Yellow
     (0, 255, 0),    # Green
-    (0, 0, 255),    # Blue
-    (75, 0, 130),   # Indigo
-    (148, 0, 211),  # Violet
+
 ]
 
 # Function to interpolate colors
@@ -121,7 +122,7 @@ def config_psychedelic():
                     button_b_debounced.update()
                     if button_a_debounced.fell or button_b_debounced.fell:
                         return
-                    time.sleep(0.05)
+                    time.sleep(0.10)
                     for k in range(10):
                         cp.pixels[k] = step_color
 
